@@ -28,11 +28,11 @@ async function loadWeather() {
   const summary = document.getElementById('weather-summary');
   try {
     const results = await Promise.all(weatherLocations.map(async (location) => {
-      const params = new URLSearchParams({ latitude: location.latitude, longitude: location.longitude, current: 'temperature_2m,weather_code', timezone: 'auto' });
+      const params = new URLSearchParams({ latitude: location.latitude, longitude: location.longitude, current: 'temperature_2m,weather_code', daily: 'temperature_2m_max,temperature_2m_min', temperature_unit: 'fahrenheit', forecast_days: '1', timezone: 'auto'});
       const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
       if (!response.ok) throw new Error('Weather request failed');
       const data = await response.json();
-      return { ...location, temperature: Math.round(data.current.temperature_2m), condition: weatherCode(data.current.weather_code) };
+      return { ...location, temperature: Math.round(data.current.temperature_2m), high: Math.round(data.daily.temperature_2m_max[0]), low: Math.round(data.daily.temperature_2m_min[0]), condition: weatherCode(data.current.weather_code) };
     }));
     weatherCards.innerHTML = results.map((item) => `<div class="weather-card"><div><strong>${item.name}</strong><small>${item.condition}</small></div><span class="weather-temp">${item.temperature}°</span></div>`).join('');
     const tokyo = results.find((item) => item.name === 'Tokyo');
