@@ -46,43 +46,40 @@ async function loadWeather() {
 function initMap() {
   if (!window.L) return;
 
+  const mapElement = document.getElementById('trip-map');
+  if (!mapElement) return;
+
   const stops = [
     { name: 'Tokyo', coords: [35.6762, 139.6503] },
     { name: 'Kyoto', coords: [35.0116, 135.7681] },
     { name: 'Osaka', coords: [34.6937, 135.5023] },
   ];
 
-  const japanBounds = L.latLngBounds([24, 122], [46, 150]);
+  const routeBounds = L.latLngBounds(
+    stops.map((stop) => stop.coords)
+  );
 
-  const map = L.map('trip-map', {
+  const map = L.map(mapElement, {
     scrollWheelZoom: false,
-    worldCopyJump: false,
-    maxBounds: japanBounds.pad(0.2),
-    maxBoundsViscosity: 1,
+    zoomControl: true,
+    zoomSnap: 1,
     minZoom: 4,
     maxZoom: 10,
-    zoomSnap: 1,
-  });
+    worldCopyJump: false,
+  }).setView([35.35, 137.8], 5);
 
-  L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  const tiles = L.tileLayer(
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
       attribution: '&copy; OpenStreetMap contributors',
-      subdomains: ['a', 'b', 'c'],
       noWrap: true,
-      bounds: japanBounds,
-      keepBuffer: 4,
-      updateWhenIdle: false,
-    }
-  ).addTo(map);
-
-  map.fitBounds(
-    L.latLngBounds(stops.map((stop) => stop.coords)),
-    {
-      padding: [30, 30],
-      maxZoom: 6,
+      keepBuffer: 2,
+      updateWhenIdle: true,
+      updateWhenZooming: false,
     }
   );
+
+  tiles.addTo(map);
 
   L.polyline(
     stops.map((stop) => stop.coords),
@@ -97,16 +94,26 @@ function initMap() {
   stops.forEach((stop) => {
     L.marker(stop.coords)
       .addTo(map)
-      .bindPopup(`<strong>${stop.name}</strong>`);
+      .bindPopup(
+        `<strong>${stop.name}</strong><br>
+        Update this stop when your route is confirmed.`
+      );
   });
 
   const refreshMapSize = () => {
     map.invalidateSize({ pan: false });
+
+    map.fitBounds(routeBounds, {
+      padding: [30, 30],
+      maxZoom: 6,
+      animate: false,
+    });
   };
 
-  map.whenReady(refreshMapSize);
+  requestAnimationFrame(refreshMapSize);
+  tiles.once('load', refreshMapSize);
   window.addEventListener('resize', refreshMapSize);
-  setTimeout(refreshMapSize, 250);
+  setTimeout(refreshMapSize, 400);
 }
 
 function initChecklist() {
