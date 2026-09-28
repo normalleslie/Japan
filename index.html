@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Shared Japan trip planning hub for itinerary, travel details, calendar, weather, maps, and essentials." />
+    <title>Japan Trip Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3LymJfJjH4cZ8P6D5LX5MZB5A0jI=" crossorigin="" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="calendar.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Site navigation">
+        <a class="brand" href="#home" aria-label="Japan Trip Hub home">
+          <span class="brand-mark">旅</span>
+          <span><strong>Japan</strong><small>Trip Hub</small></span>
+        </a>
+        <div class="trip-status"><span class="status-dot"></span><span id="trip-status-label">Planning in progress</span></div>
+        <nav class="nav-links">
+          <a class="nav-link active" href="#home">Overview <span>01</span></a>
+          <a class="nav-link" href="#itinerary">Itinerary <span>02</span></a>
+          <a class="nav-link" href="#travel">Travel details <span>03</span></a>
+          <a class="nav-link" href="#calendar">Calendar <span>04</span></a>
+          <a class="nav-link" href="#weather-map">Weather & map <span>05</span></a>
+          <a class="nav-link" href="#essentials">Essentials <span>06</span></a>
+        </nav>
+        <div class="sidebar-footer">
+          <p class="eyebrow">Shared trip calendar</p>
+          <p class="sidebar-note">Add events directly to the calendar so the whole group sees the same plan.</p>
+          <a class="sheet-link" href="#calendar">Go to calendar <span>↓</span></a>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar" id="home">
+          <div>
+            <p class="eyebrow">Group travel dashboard · 2026</p>
+            <h1>Japan, together.</h1>
+            <p class="lede">One calm place for the plan, the details, and the little things we do not want to forget.</p>
+          </div>
+          <div class="top-actions">
+            <button class="button button-ghost" id="copy-link" type="button">Copy site link</button>
+            <a class="button button-dark" href="#calendar">Edit calendar ↓</a>
+          </div>
+        </header>
+
+        <section class="hero-grid" aria-label="Trip snapshot">
+          <article class="hero-card hero-image-card">
+            <div class="hero-image"></div>
+            <div class="hero-image-overlay"></div>
+            <div class="hero-copy">
+              <span class="kicker">The big picture</span>
+              <h2>Good plans leave room<br />for good surprises.</h2>
+              <p>Use this hub for the decisions we have made—and the ones still waiting for us.</p>
+            </div>
+          </article>
+          <article class="snapshot-card">
+            <div class="card-heading"><span class="icon-badge">◷</span><span class="eyebrow">Trip dates</span></div>
+            <p class="snapshot-value" id="trip-dates">Dates to be confirmed</p>
+            <p class="muted">Add confirmed dates to the shared calendar.</p>
+          </article>
+          <article class="snapshot-card accent-card">
+            <div class="card-heading"><span class="icon-badge">⌖</span><span class="eyebrow">Route</span></div>
+            <p class="snapshot-value">Japan</p>
+            <p class="muted">Cities and stays will appear here as the plan comes together.</p>
+          </article>
+          <article class="snapshot-card dark-card">
+            <div class="card-heading"><span class="icon-badge light">☼</span><span class="eyebrow light-text">Live now</span></div>
+            <p class="snapshot-value light-text" id="weather-summary">Loading weather…</p>
+            <p class="muted light-muted">Tokyo · updated from Open-Meteo</p>
+          </article>
+        </section>
+
+        <section class="section-block" id="itinerary">
+          <div class="section-heading">
+            <div><p class="eyebrow">02 · What is happening</p><h2>Itinerary at a glance</h2></div>
+            <a class="text-link" href="#calendar">See shared calendar <span>→</span></a>
+          </div>
+          <div class="itinerary-layout">
+            <div class="timeline-card">
+              <div class="timeline-header"><span>Day</span><span>Plan</span><span>Notes</span></div>
+              <div class="timeline-row"><strong class="day-pill">01</strong><div><strong>Arrival day</strong><small>Airport → lodging → settle in</small></div><span class="tag tag-pending">Add flight</span></div>
+              <div class="timeline-row"><strong class="day-pill">02</strong><div><strong>First full day</strong><small>Choose a neighborhood to explore</small></div><span class="tag tag-pending">Add plans</span></div>
+              <div class="timeline-row"><strong class="day-pill">03</strong><div><strong>Open day</strong><small>Leave space for a spontaneous find</small></div><span class="tag tag-pending">Add plans</span></div>
+              <div class="timeline-row"><strong class="day-pill">04</strong><div><strong>Travel day</strong><small>Train details and luggage plan</small></div><span class="tag tag-pending">Add route</span></div>
+            </div>
+            <aside class="next-up-card">
+              <p class="eyebrow">Next up</p>
+              <h3>Make the plan useful to the group.</h3>
+              <ul class="mini-list">
+                <li><span class="check empty"></span><span>Add confirmed dates and cities to the master sheet.</span></li>
+                <li><span class="check empty"></span><span>Paste lodging addresses and check-in details below.</span></li>
+                <li><span class="check empty"></span><span>Add flight numbers so arrival times are easy to find.</span></li>
+              </ul>
+              <a class="button button-dark full-width" href="#travel">Add travel details ↓</a>
+            </aside>
+          </div>
+        </section>
+
+        <section class="section-block" id="travel">
+          <div class="section-heading"><div><p class="eyebrow">03 · The practical details</p><h2>Travel details</h2></div><span class="section-helper">Keep these easy to reach from the airport, station, and street.</span></div>
+          <div class="detail-grid">
+            <article class="detail-card"><div class="detail-icon red">⌂</div><div><h3>Lodging</h3><p class="placeholder">Airbnb name, address, check-in time, entry instructions, and host contact.</p><a class="text-link" href="#essentials">Add lodging details →</a></div></article>
+            <article class="detail-card"><div class="detail-icon blue">✈</div><div><h3>Flights</h3><p class="placeholder">Airline, flight numbers, terminals, departure/arrival times, and baggage notes.</p><a class="text-link" href="#essentials">Add flight details →</a></div></article>
+            <article class="detail-card"><div class="detail-icon gold">⇄</div><div><h3>Trains</h3><p class="placeholder">Routes, reserved seats, station names, transfer notes, and ticket links.</p><a class="text-link" href="#essentials">Add train details →</a></div></article>
+          </div>
+        </section>
+
+        <section class="section-block calendar-section" id="calendar">
+          <div class="section-heading"><div><p class="eyebrow">04 · The shared source of truth</p><h2>Editable group calendar</h2></div><button class="button button-light" id="add-event-top" type="button">Add an event +</button></div>
+          <div class="calendar-intro"><span class="calendar-mark">▦</span><p>Add, edit, and remove trip events directly here. Changes are saved to the shared calendar so the whole group sees the same plan.</p></div>
+          <div class="calendar-toolbar"><button class="calendar-arrow" id="previous-month" type="button" aria-label="Previous month">←</button><h3 id="calendar-month-label">Loading calendar…</h3><button class="calendar-arrow" id="next-month" type="button" aria-label="Next month">→</button><button class="calendar-today" id="today-button" type="button">Today</button></div>
+          <div class="calendar-workspace"><div class="month-calendar"><div class="weekday-row"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div><div id="calendar-grid" class="calendar-grid"><div class="calendar-loading">Loading shared events…</div></div></div><aside class="day-agenda"><div class="agenda-header"><div><p class="eyebrow">Selected day</p><h3 id="selected-day-label">Choose a date</h3></div><button class="small-add" id="add-event-day" type="button" aria-label="Add event to selected day">+</button></div><div id="selected-day-events" class="selected-day-events"><p class="empty-agenda">Select a day to see its events.</p></div></aside></div>
+          <p class="calendar-status" id="calendar-status">Shared calendar ready.</p>
+        </section>
+
+        <section class="section-block" id="weather-map">
+          <div class="section-heading"><div><p class="eyebrow">05 · Look around</p><h2>Weather & map</h2></div><span class="section-helper">Live weather requires an internet connection.</span></div>
+          <div class="weather-map-grid">
+            <div class="weather-panel">
+              <div class="panel-top"><div><p class="eyebrow">Live forecast</p><h3>Japan weather check</h3></div><span class="live-label"><span class="live-dot"></span>Live</span></div>
+              <div id="weather-cards" class="weather-cards"><div class="loading-card">Checking the skies…</div></div>
+              <p class="source-note">Forecast data: Open-Meteo · no account or API key required.</p>
+            </div>
+            <div class="map-panel"><div class="panel-top map-panel-top"><div><p class="eyebrow">Orient yourself</p><h3>Japan route map</h3></div><a class="text-link" href="https://www.google.com/maps/search/Japan" target="_blank" rel="noreferrer">Open Google Maps ↗</a></div><div id="trip-map" aria-label="Map of Japan"></div><p class="source-note">Starter map centered on Japan. Add exact locations as your route is confirmed.</p></div>
+          </div>
+        </section>
+
+        <section class="section-block" id="essentials">
+          <div class="section-heading"><div><p class="eyebrow">06 · Before we go</p><h2>Essentials</h2></div><span class="section-helper">A short list beats a long list nobody checks.</span></div>
+          <div class="essentials-grid">
+            <article class="checklist-card"><div class="panel-top"><h3>Trip checklist</h3><span class="counter" id="check-counter">0 / 6</span></div><div class="checklist" id="checklist"><label><input type="checkbox" /><span>Passport and travel documents</span></label><label><input type="checkbox" /><span>Travel insurance information</span></label><label><input type="checkbox" /><span>eSIM / pocket Wi-Fi plan</span></label><label><input type="checkbox" /><span>Transit card or payment plan</span></label><label><input type="checkbox" /><span>Comfortable walking shoes</span></label><label><input type="checkbox" /><span>Emergency contacts saved offline</span></label></div></article>
+            <article class="notes-card"><div class="panel-top"><h3>Quick group notes</h3><span class="local-label">Saved on this device</span></div><textarea id="quick-notes" placeholder="Add a reminder, restaurant idea, packing note, or question for the group…"></textarea><p class="source-note">For group-wide edits, use the shared calendar above. These quick notes stay in this browser.</p></article>
+          </div>
+        </section>
+
+        <footer class="site-footer"><span>Japan Trip Hub</span><span>Plan lightly. Travel fully.</span></footer>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="app.js"></script>
+  </body>
+</html>

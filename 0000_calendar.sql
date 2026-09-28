@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS events (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  event_date TEXT NOT NULL,
+  start_time TEXT NOT NULL DEFAULT '',
+  end_time TEXT NOT NULL DEFAULT '',
+  location TEXT NOT NULL DEFAULT '',
+  notes TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_events_event_date ON events(event_date);
