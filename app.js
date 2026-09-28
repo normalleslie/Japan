@@ -52,15 +52,12 @@ function initMap() {
     { name: 'Osaka', coords: [34.6937, 135.5023] },
   ];
 
-  const japanBounds = L.latLngBounds(
-    [24, 122],
-    [46, 150]
-  );
+  const japanBounds = L.latLngBounds([24, 122], [46, 150]);
 
   const map = L.map('trip-map', {
     scrollWheelZoom: false,
     worldCopyJump: false,
-    maxBounds: japanBounds.pad(0.15),
+    maxBounds: japanBounds.pad(0.2),
     maxBoundsViscosity: 1,
     minZoom: 4,
     maxZoom: 10,
@@ -68,10 +65,10 @@ function initMap() {
   });
 
   L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
-      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-      subdomains: 'abcd',
+      attribution: '&copy; OpenStreetMap contributors',
+      subdomains: ['a', 'b', 'c'],
       noWrap: true,
       bounds: japanBounds,
       keepBuffer: 4,
@@ -81,7 +78,10 @@ function initMap() {
 
   map.fitBounds(
     L.latLngBounds(stops.map((stop) => stop.coords)),
-    { padding: [30, 30], maxZoom: 6 }
+    {
+      padding: [30, 30],
+      maxZoom: 6,
+    }
   );
 
   L.polyline(
@@ -100,11 +100,13 @@ function initMap() {
       .bindPopup(`<strong>${stop.name}</strong>`);
   });
 
-  const refreshMap = () => map.invalidateSize({ pan: false });
+  const refreshMapSize = () => {
+    map.invalidateSize({ pan: false });
+  };
 
-  map.whenReady(refreshMap);
-  window.addEventListener('resize', refreshMap);
-  setTimeout(refreshMap, 250);
+  map.whenReady(refreshMapSize);
+  window.addEventListener('resize', refreshMapSize);
+  setTimeout(refreshMapSize, 250);
 }
 
 function initChecklist() {
