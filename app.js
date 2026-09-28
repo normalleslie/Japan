@@ -34,9 +34,9 @@ async function loadWeather() {
       const data = await response.json();
       return { ...location, temperature: Math.round(data.current.temperature_2m), high: Math.round(data.daily.temperature_2m_max[0]), low: Math.round(data.daily.temperature_2m_min[0]), condition: weatherCode(data.current.weather_code) };
     }));
-    weatherCards.innerHTML = results.map((item) => `<div class="weather-card"><div><strong>${item.name}</strong><small>${item.condition}</small></div><span class="weather-temp">${item.temperature}°</span></div>`).join('');
+    weatherCards.innerHTML = results.map((item) => `<div class="weather-card"><div><strong>${item.name}</strong><small>${item.condition}<br>High ${item.high}°F · Low ${item.low}°F</small></div><span class="weather-temp">${item.temperature}°F</span></div>`).join('');
     const tokyo = results.find((item) => item.name === 'Tokyo');
-    summary.textContent = tokyo ? `${tokyo.temperature}° · ${tokyo.condition}` : 'Forecast ready';
+    summary.textContent = tokyo ? `${tokyo.temperature}°F · H ${tokyo.high}°F / L ${tokyo.low}°F` : 'Forecast ready';
   } catch (error) {
     weatherCards.innerHTML = '<div class="loading-card">Weather is unavailable right now. Try refreshing when you are online.</div>';
     summary.textContent = 'Weather offline';
