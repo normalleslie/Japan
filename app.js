@@ -28,15 +28,15 @@ async function loadWeather() {
   const summary = document.getElementById('weather-summary');
   try {
     const results = await Promise.all(weatherLocations.map(async (location) => {
-      const params = new URLSearchParams({ latitude: location.latitude, longitude: location.longitude, current: 'temperature_2m,weather_code', daily: 'temperature_2m_max,temperature_2m_min', temperature_unit: 'fahrenheit', forecast_days: '1', timezone: 'auto'});
+      const params = new URLSearchParams({ latitude: location.latitude, longitude: location.longitude, current: 'temperature_2m,weather_code', timezone: 'auto' });
       const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
       if (!response.ok) throw new Error('Weather request failed');
       const data = await response.json();
-      return { ...location, temperature: Math.round(data.current.temperature_2m), high: Math.round(data.daily.temperature_2m_max[0]), low: Math.round(data.daily.temperature_2m_min[0]), condition: weatherCode(data.current.weather_code) };
+      return { ...location, temperature: Math.round(data.current.temperature_2m), condition: weatherCode(data.current.weather_code) };
     }));
-    weatherCards.innerHTML = results.map((item) => `<div class="weather-card"><div><strong>${item.name}</strong><small>${item.condition}<br>High ${item.high}°F · Low ${item.low}°F</small></div><span class="weather-temp">${item.temperature}°F</span></div>`).join('');
+    weatherCards.innerHTML = results.map((item) => `<div class="weather-card"><div><strong>${item.name}</strong><small>${item.condition}</small></div><span class="weather-temp">${item.temperature}°</span></div>`).join('');
     const tokyo = results.find((item) => item.name === 'Tokyo');
-    summary.textContent = tokyo ? `${tokyo.temperature}°F · H ${tokyo.high}°F / L ${tokyo.low}°F` : 'Forecast ready';
+    summary.textContent = tokyo ? `${tokyo.temperature}° · ${tokyo.condition}` : 'Forecast ready';
   } catch (error) {
     weatherCards.innerHTML = '<div class="loading-card">Weather is unavailable right now. Try refreshing when you are online.</div>';
     summary.textContent = 'Weather offline';
@@ -45,75 +45,15 @@ async function loadWeather() {
 
 function initMap() {
   if (!window.L) return;
-
-  const mapElement = document.getElementById('trip-map');
-  if (!mapElement) return;
-
+  const map = L.map('trip-map', { scrollWheelZoom: false }).setView([35.35, 137.8], 5.4);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
   const stops = [
     { name: 'Tokyo', coords: [35.6762, 139.6503] },
     { name: 'Kyoto', coords: [35.0116, 135.7681] },
     { name: 'Osaka', coords: [34.6937, 135.5023] },
   ];
-
-  const routeBounds = L.latLngBounds(
-    stops.map((stop) => stop.coords)
-  );
-
-  const map = L.map(mapElement, {
-    scrollWheelZoom: false,
-    zoomControl: true,
-    zoomSnap: 1,
-    minZoom: 4,
-    maxZoom: 10,
-    worldCopyJump: false,
-  }).setView([35.35, 137.8], 5);
-
-  const tiles = L.tileLayer(
-    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {
-      attribution: '&copy; OpenStreetMap contributors',
-      noWrap: true,
-      keepBuffer: 2,
-      updateWhenIdle: true,
-      updateWhenZooming: false,
-    }
-  );
-
-  tiles.addTo(map);
-
-  L.polyline(
-    stops.map((stop) => stop.coords),
-    {
-      color: '#c94f3e',
-      weight: 3,
-      opacity: 0.75,
-      dashArray: '7 8',
-    }
-  ).addTo(map);
-
-  stops.forEach((stop) => {
-    L.marker(stop.coords)
-      .addTo(map)
-      .bindPopup(
-        `<strong>${stop.name}</strong><br>
-        Update this stop when your route is confirmed.`
-      );
-  });
-
-  const refreshMapSize = () => {
-    map.invalidateSize({ pan: false });
-
-    map.fitBounds(routeBounds, {
-      padding: [30, 30],
-      maxZoom: 6,
-      animate: false,
-    });
-  };
-
-  requestAnimationFrame(refreshMapSize);
-  tiles.once('load', refreshMapSize);
-  window.addEventListener('resize', refreshMapSize);
-  setTimeout(refreshMapSize, 400);
+  L.polyline(stops.map((stop) => stop.coords), { color: '#c94f3e', weight: 3, opacity: .75, dashArray: '7 8' }).addTo(map);
+  stops.forEach((stop) => L.marker(stop.coords).addTo(map).bindPopup(`<strong>${stop.name}</strong><br>Update this stop when your route is confirmed.`));
 }
 
 function initChecklist() {
