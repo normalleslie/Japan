@@ -121,19 +121,30 @@ const eventTime = (event) => event.start_time ? `${event.start_time}${event.end_
 
 async function loadCalendarEvents() {
   const status = document.getElementById('calendar-status');
+
   try {
-    const response = await fetch('/api/events');
-    if (!response.ok) throw new Error('Calendar request failed');
+    const response = await fetch('./events.json');
+
+    if (!response.ok) {
+      throw new Error('Could not load events');
+    }
+
     const data = await response.json();
-    calendarState.events = Array.isArray(data.events) ? data.events : [];
-    status.textContent = 'Shared calendar ready.';
+
+    calendarState.events = Array.isArray(data) ? data : [];
+
+    status.textContent = 'Calendar updated from GitHub.';
     status.classList.remove('calendar-error');
   } catch (error) {
     calendarState.events = [];
-    status.textContent = 'The shared calendar is temporarily unavailable. Please refresh and try again.';
+    status.textContent = 'Calendar events could not be loaded.';
     status.classList.add('calendar-error');
   }
-  if (!calendarState.selectedDate) calendarState.selectedDate = dateKey(calendarState.viewDate);
+
+  if (!calendarState.selectedDate) {
+    calendarState.selectedDate = dateKey(calendarState.viewDate);
+  }
+
   renderCalendar();
 }
 
@@ -168,13 +179,47 @@ function renderCalendar() {
 
 function renderAgenda() {
   const key = calendarState.selectedDate;
-  document.getElementById('selected-day-label').textContent = key ? displayDate(key, { month: 'short', day: 'numeric' }) : 'Choose a date';
+
+  document.getElementById('selected-day-label').textContent = key
+    ? displayDate(key, { month: 'short', day: 'numeric' })
+    : 'Choose a date';
+
   const container = document.getElementById('selected-day-events');
   const events = key ? eventsForDate(key) : [];
-  if (!events.length) { container.innerHTML = '<p class="empty-agenda">No events yet. Add one for this day.</p>'; return; }
-  container.innerHTML = events.map((event) => `<article class="agenda-event"><div class="agenda-event-time">${escapeHTML(eventTime(event))}</div><div class="agenda-event-body"><strong>${escapeHTML(event.title)}</strong>${event.location ? `<small>⌖ ${escapeHTML(event.location)}</small>` : ''}${event.notes ? `<p>${escapeHTML(event.notes)}</p>` : ''}</div><div class="agenda-event-actions"><button type="button" data-edit-event="${event.id}" aria-label="Edit ${escapeHTML(event.title)}">Edit</button><button type="button" data-delete-event="${event.id}" aria-label="Delete ${escapeHTML(event.title)}">Delete</button></div></article>`).join('');
-  container.querySelectorAll('[data-edit-event]').forEach((button) => button.addEventListener('click', () => openEventDialog(calendarState.events.find((event) => String(event.id) === button.dataset.editEvent))));
-  container.querySelectorAll('[data-delete-event]').forEach((button) => button.addEventListener('click', () => deleteEvent(button.dataset.deleteEvent)));
+
+  if (!events.length) {
+    container.innerHTML =
+      '<p class="empty-agenda">No events scheduled for this day.</p>';
+    return;
+  }
+
+  container.innerHTML = events
+    .map(
+      (event) => `
+        <article class="agenda-event">
+          <div class="agenda-event-time">
+            ${escapeHTML(eventTime(event))}
+          </div>
+
+          <div class="agenda-event-body">
+            <strong>${escapeHTML(event.title)}</strong>
+
+            ${
+              event.location
+                ? `<small>⌖ ${escapeHTML(event.location)}</small>`
+                : ''
+            }
+
+            ${
+              event.notes
+                ? `<p>${escapeHTML(event.notes)}</p>`
+                : ''
+            }
+          </div>
+        </article>
+      `
+    )
+    .join('');
 }
 
 function openEventDialog(event = null) {
@@ -213,11 +258,32 @@ async function deleteEvent(id) {
 }
 
 function initCalendar() {
-  document.getElementById('previous-month').addEventListener('click', () => { calendarState.viewDate.setMonth(calendarState.viewDate.getMonth() - 1); renderCalendar(); });
-  document.getElementById('next-month').addEventListener('click', () => { calendarState.viewDate.setMonth(calendarState.viewDate.getMonth() + 1); renderCalendar(); });
-  document.getElementById('today-button').addEventListener('click', () => { calendarState.viewDate = new Date(); calendarState.selectedDate = dateKey(new Date()); renderCalendar(); });
-  document.getElementById('add-event-top').addEventListener('click', () => openEventDialog());
-  document.getElementById('add-event-day').addEventListener('click', () => openEventDialog());
+  document
+    .getElementById('previous-month')
+    .addEventListener('click', () => {
+      calendarState.viewDate.setMonth(
+        calendarState.viewDate.getMonth() - 1
+      );
+      renderCalendar();
+    });
+
+  document
+    .getElementById('next-month')
+    .addEventListener('click', () => {
+      calendarState.viewDate.setMonth(
+        calendarState.viewDate.getMonth() + 1
+      );
+      renderCalendar();
+    });
+
+  document
+    .getElementById('today-button')
+    .addEventListener('click', () => {
+      calendarState.viewDate = new Date();
+      calendarState.selectedDate = dateKey(new Date());
+      renderCalendar();
+    });
+
   loadCalendarEvents();
 }
 
