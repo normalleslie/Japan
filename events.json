@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Arrive in Tokyo",
+    "event_date": "2026-12-17",
+    "start_time": "14:00",
+    "end_time": "",
+    "location": "Tokyo",
+    "notes": "Check in and settle in"
+  },
+  {
+    "title": "Travel to Kyoto",
+    "event_date": "2026-12-23",
+    "start_time": "09:00",
+    "end_time": "",
+    "location": "Tokyo Station",
+    "notes": "Take the Shinkansen"
+  }
+]
