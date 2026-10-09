@@ -14,5 +14,13 @@
     "end_time": "",
     "location": "Tokyo Station",
     "notes": "Take the Shinkansen"
+  },
+  {
+    "title": "Travel back home",
+    "event_date": "2026-12-29",
+    "start_time": "09:00",
+    "end_time": "",
+    "location": "Haneda Airport",
+    "notes": "Check in to flight"
   }
 ]
