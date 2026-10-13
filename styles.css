@@ -746,7 +746,6 @@ body {
 }
 
 #trip-map {
-  height: 281px;
   border-radius: 7px;
   overflow: hidden;
   filter: saturate(.72);
