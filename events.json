@@ -1,26 +1,116 @@
 [
   {
-    "title": "Arrive in Tokyo",
+    "title": "Full travel day to Japan",
+    "event_date": "2026-12-16",
+    "start_time": "10:15",
+    "end_time": "",
+    "location": "",
+    "notes": "Travel time: 10:15 AM on Dec 16 through 3:20 PM on Dec 17."
+  },
+  {
+    "title": "Arrive in Japan, check into Airbnb",
     "event_date": "2026-12-17",
-    "start_time": "14:00",
+    "start_time": "",
     "end_time": "",
-    "location": "Tokyo",
-    "notes": "Check in and settle in"
+    "location": "6-chōme-30-9 Aoto, Katsushika City, Tokyo",
+    "location_url": "https://www.google.com/maps/place/6+Chome-30-9+%E9%9D%92%E6%88%B8/data=!4m2!3m1!19sChIJFf8sL4-FGGARs21lnzCkTzw",
+    "notes": "Keep in mind that there is a +17 hour time difference from LA.\n\nCheck into Airbnb in Katsushika City.\nNearest station: Aoto Station.\n\nDinner nearby. Relax and recover from the flight."
   },
   {
-    "title": "Travel to Kyoto",
+    "title": "Shibuya + Harajuku",
+    "event_date": "2026-12-18",
+    "start_time": "",
+    "end_time": "",
+    "location": "",
+    "notes": "Meiji Jingu\nYoyogi Park\nShibuya Crossing\nNintendo Tokyo\nHands Shibuya\nBIG LOVE Records\nCoffee Elementary School\nSHOTO CAFE"
+  },
+  {
+    "title": "Akihabara + Ochanomizu",
+    "event_date": "2026-12-19",
+    "start_time": "",
+    "end_time": "",
+    "location": "",
+    "notes": "Akihabara\nYodobashi Akiba\nHareruya Tournament Center\nHareruya 2\nHareruya 3\nOchanomizu Guitar Street"
+  },
+  {
+    "title": "Ginza + Odaiba",
+    "event_date": "2026-12-20",
+    "start_time": "",
+    "end_time": "",
+    "location": "",
+    "notes": "Morning:\nBONGENCOFFEE Ginza\nMUJI Ginza\nUniqlo Ginza Flagship\nGinza Itoya\nSeiko House Ginza Hall\nCitizen Flagship Store Tokyo\n\nAfternoon:\nOdaiba"
+  },
+  {
+    "title": "Tokyo Disney",
+    "event_date": "2026-12-21",
+    "start_time": "",
+    "end_time": "",
+    "location": "Tokyo Disney",
+    "notes": "Arrive before park opening.\nFull day in the park.\nReturn to Aoto and pack for Osaka."
+  },
+  {
+    "title": "Onsen + Shinjuku",
+    "event_date": "2026-12-22",
+    "start_time": "",
+    "end_time": "",
+    "location": "",
+    "notes": "Maenohara Onsen Sayano Yudokoro\nSekaido Shinjuku\nCat Cafe MOCHA Lounge Shinjuku\nShinjuku Chūō Park"
+  },
+  {
+    "title": "Tokyo → Osaka",
     "event_date": "2026-12-23",
-    "start_time": "09:00",
+    "start_time": "",
     "end_time": "",
-    "location": "Tokyo Station",
-    "notes": "Take the Shinkansen"
+    "location": "2-chōme-14-24 Minamiichioka, Osaka",
+    "location_url": "https://www.google.com/maps/place/2+Chome-14-24+Minamiichioka/data=!4m2!3m1!19sChIJ02rh-8nnAGARVT3z29EkdJ0",
+    "notes": "Address: 2-chōme-14-24 Minamiichioka, Osaka, Osaka 552-0011.\nNearest station: Bentencho Station.\n\nCheck into Airbnb.\nDotonbori\nShinsaibashi\nNishishinsaibashi\nしっぽタウン ヴィラ今宮駅"
   },
   {
-    "title": "Travel back home",
+    "title": "Kyoto",
+    "event_date": "2026-12-24",
+    "start_time": "",
+    "end_time": "",
+    "location": "Kyoto",
+    "notes": "Fushimi Inari Taisha\nKiyomizu-dera\nSannenzaka & Ninenzaka\nPokémon Center Kyoto\nGion, if time allows"
+  },
+  {
+    "title": "Universal Studios",
+    "event_date": "2026-12-25",
+    "start_time": "",
+    "end_time": "",
+    "location": "Universal Studios Japan",
+    "notes": "Estimated cost: ~$60."
+  },
+  {
+    "title": "Osaka → Tokyo",
+    "event_date": "2026-12-26",
+    "start_time": "",
+    "end_time": "",
+    "location": "",
+    "notes": ""
+  },
+  {
+    "title": "Yokohama",
+    "event_date": "2026-12-27",
+    "start_time": "",
+    "end_time": "",
+    "location": "Yokohama",
+    "notes": "Yokohama Chinatown\nCup Noodles Museum\nMinato Mirai, if time"
+  },
+  {
+    "title": "Flex Day",
+    "event_date": "2026-12-28",
+    "start_time": "",
+    "end_time": "",
+    "location": "",
+    "notes": "Option 1: Ikebukuro + Nakano\n\nOption 2: Mount Fuji/Hakone"
+  },
+  {
+    "title": "Return home",
     "event_date": "2026-12-29",
-    "start_time": "09:00",
+    "start_time": "20:00",
     "end_time": "",
     "location": "Haneda Airport",
-    "notes": "Check in to flight"
+    "notes": "Flight time: 8:00 PM – 12:59 PM.\nCheck in to flight."
   }
 ]
