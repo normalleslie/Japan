@@ -284,7 +284,6 @@ document.querySelectorAll('.nav-link').forEach((link) => link.addEventListener('
 }));
 
 loadWeather();
-initMap();
 initChecklist();
 initNotes();
 initCalendar();
