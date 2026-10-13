@@ -76,19 +76,6 @@ async function loadWeather() {
   }
 }
 
-function initMap() {
-  if (!window.L) return;
-  const map = L.map('trip-map', { scrollWheelZoom: false }).setView([35.35, 137.8], 5.4);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
-  const stops = [
-    { name: 'Tokyo', coords: [35.6762, 139.6503] },
-    { name: 'Kyoto', coords: [35.0116, 135.7681] },
-    { name: 'Osaka', coords: [34.6937, 135.5023] },
-  ];
-  L.polyline(stops.map((stop) => stop.coords), { color: '#c94f3e', weight: 3, opacity: .75, dashArray: '7 8' }).addTo(map);
-  stops.forEach((stop) => L.marker(stop.coords).addTo(map).bindPopup(`<strong>${stop.name}</strong><br>Update this stop when your route is confirmed.`));
-}
-
 function initChecklist() {
   const items = [...document.querySelectorAll('#checklist input')];
   const saved = JSON.parse(localStorage.getItem('japan-trip-checklist') || '[]');
